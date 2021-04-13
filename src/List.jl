@@ -6,7 +6,8 @@ export ArrayList, array_list_from_vector
 mutable struct ArrayList{T}
     storage::Vector{T}
     last_index::Int64
-    ArrayList(::Type{T}, init_capacity::Int64) where T = new{T}(Vector{T}(undef, init_capacity), 0)
+    ArrayList(::Type{T}, init_capacity::Int64) where T =
+        new{T}(Vector{T}(undef, init_capacity), 0)
 end
 
 function array_list_from_vector(v::AbstractVector{T}) where T
@@ -83,7 +84,8 @@ function Base.getindex(lst::ArrayList{T}, index::Integer) where T
     end
 end
 
-function Base.getindex(lst::ArrayList{T}, index::AbstractVector{I}) where {T, I <: Integer}
+function Base.getindex(lst::ArrayList{T},
+                       index::AbstractVector{I}) where {T, I <: Integer}
     n = length(index)
     ilast = last(index)
     ifirst = first(index)
@@ -118,7 +120,8 @@ function Base.getindex(lst::ArrayList{T}, index::AbstractVector{Bool}) where {T}
     end
 end
 
-function Base.setindex!(lst::ArrayList{T}, value::T, index::I) where {T, I <: Integer}
+function Base.setindex!(lst::ArrayList{T}, value::T,
+                        index::I) where {T, I <: Integer}
     if index >= 1 && index <= lst.last_index
         lst.storage[index] = value
         nothing
@@ -138,7 +141,9 @@ function Base.setindex!(lst::ArrayList{T}, value::AbstractVector{T},
     ilast = last(index)
     ifirst = first(index)
     if n != nv
-        throw(DimensionMismatch("tried to assigning $(nv) elements to $(n) destinations"))
+        throw(DimensionMismatch(
+            "tried to assigning $(nv) elements to $(n) destinations"
+        ))
     elseif n == 0
         nothing
     elseif ifirst > lst.last_index || ifirst < 1 || ilast > lst.last_index
@@ -173,7 +178,8 @@ function Base.iterate(lst::ArrayList{T}, state = 1) where T
     end
 end
 
-function Base.iterate(lst::Base.Iterators.Reverse{ArrayList{T}}, state = 1) where T
+function Base.iterate(lst::Base.Iterators.Reverse{ArrayList{T}},
+                      state = 1) where T
     l = lst.itr
     if state > l.last_index
         return nothing
