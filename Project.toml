@@ -1,0 +1,4 @@
+name = "AVCUtils"
+uuid = "158be1ef-6b37-4aa8-b6f1-a09818f94944"
+authors = ["mobiuseng <alexey.cherkaev@gmail.com>"]
+version = "0.1.0"
