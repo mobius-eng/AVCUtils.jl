@@ -22,4 +22,8 @@ macro def_strong_type(name, exporting = false)
     end
 end
 
+# For strong types to work with broadcasting
+Base.length(x::SomeStrongType) where {SomeStrongType <: AbstractStrongType} = length(x.value)
+Base.iterate(x::SomeStrongType) where {SomeStrongType <: AbstractStrongType} = (x, nothing)
+Base.iterate(x::SomeStrongType, ::Nothing) where {SomeStrongType <: AbstractStrongType} = nothing
 end
